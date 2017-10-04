@@ -2,45 +2,143 @@
 <html>
 <head>
 	<title>HIT</title>
-</head>
-<body>
+
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="mturk.js"></script>
+    <script>
+    	var numclicks = 0;
+    	var keydowns = 0;
+
+      var addedelements = [];
+
+    	$(document).ready(function() {
+    		$("#img6").click(function(e) {
+          numclicks++;
+          $("#numberofpeople").text(numclicks);
+          $("#numberofpeoplefield").val(numclicks);
+
+          var newdomelement = $("<div class='marker'></div>");
+          newdomelement.css("left", (e.pageX-3) + "px");
+          newdomelement.css("top", (e.pageY-3) + "px");
+
+          var currhistory = $("#history").val();
+          currhistory += "|" + e.pageX + "," + e.pageY + "|";
+          $("#history").val(currhistory);
+
+          newdomelement.click(removeElementEvent);
+
+          $("body").append(newdomelement);
+
+          // add to history
+          addedelements.push(newdomelement);
+    		})
+    		$(document).keydown(function(e) {
+    			keydowns++;
+    			$("#numkeydowns").val(keydowns);
+
+          console.log(e);
+
+          if(e.key=="z" && e.ctrlKey) {
+            var elem2remove = addedelements.pop();
+            removeElement(elem2remove);
+          }
+    		})
+    	})
+
+      function removeElement(elem) {
+        $(elem).remove();
+
+        numclicks--;
+        $("#numberofpeople").text(numclicks);
+        $("#numberofpeoplefield").val(numclicks);       
+      }
+
+      function removeElementEvent(e) {
+        removeElement(this);
+      }
+    </script>
+  <style>
+    .marker {
+      border: 2px solid red;
+      border-radius: 5px;
+      width: 2px;
+      height: 2px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+  </style>
+</head>
+
+<body>
 		<h1 align="center">Welcome to Mechanical Turk</h1>
 		<h2 align="center">Task Instruction</h2>
 		<h3 align="center"><strong>Question: How many recognizable people are there in each image?</strong></h3><br />
-		<p align="center">Type in the text box to tell us how many people you can recognize in those pictues, and the more you get it correct, the more payment you will get.</p><br/>
+		<p align="center" width="800">Type in the text box to tell us how many <strong>people's heads(at least half of the head; back and front both count)</strong> you can recognize in those pictues. The more answers you get it correct, the more payment you will get.</p><br/>
 		
 		<!-- <form name="data" action="mailto:chenxinw@andrew.cmu.edu" method="post" enctype="text/plain">-->
 		
-		<center><img src="https://lh5.googleusercontent.com/UHQoCsSgyHiT_L3CtbRH299KTEAgOQsF5C64rA3jph7pdq3GdXMcvkcqGv361aEIeFI6Nr7MBuVQD6cF6-fAsLIskE0A5A6iQiz4S3RMJRuTHu-g52q9UVSylgu9MC6U" height="350" width="600" alt="12 people" /><br/>
-		<p><input type="text" name="number1" size="8" maxlength="8">people</p><br/>
+		<center>
+			<h3>Here's an example: </h3>
+            <img id="img0" src="http://dreamatico.com/data_images/people/people-2.jpg" height="380" width="600" /></br>
+            <p>There are <strong>6 people</strong> in this picture.</p></br>
 
-		<img src="https://lh6.googleusercontent.com/7_WbZEKYJWzabnHY4Ahm9nirTL7B1GzCS0yj47RUlRD4hsOn40ukc3CtVK_OU80rYDCWL_tlvUOYdFyK1TbOcFi4QoM5_g_KTWJ_5PaNpjNRk4XURxGmkZnZszUj0IHc" height="380" width="600" alt="2" /><br/>
-		<p><input type="text" name="number2" size="8" maxlength="8">people</p><br/>
+            <h3>Understand? Let's have a try!</h3>
+			<p><strong>IMG 1</strong></p>
+			<img id="img1" src="https://lh5.googleusercontent.com/UHQoCsSgyHiT_L3CtbRH299KTEAgOQsF5C64rA3jph7pdq3GdXMcvkcqGv361aEIeFI6Nr7MBuVQD6cF6-fAsLIskE0A5A6iQiz4S3RMJRuTHu-g52q9UVSylgu9MC6U" height="350" width="600" alt="12 people" /><br/>
+		    
+		    <p><input id="num1" type="text" name="number1" size="8" maxlength="8">  people</p><br/>
 
-		<img src="https://lh5.googleusercontent.com/MWMl0n6oze9DSHWY0LxIAV2nYwGusrYBxjA05-CqTP3-i1rAdbnUwj0s5wdKbr3F7Tk_VByathw92hChI1SL4HWPxpNbzeYkUjssjfppEkYP1OMQy5_rUwM-Crfex8E0" width="600" alt="6" /><br/>
-		<p><input type="text" name="number3" size="8" maxlength="8">people</p><br/>
+            <p><strong>IMG 2</strong></p>
+		    <img id="img2" src="https://lh6.googleusercontent.com/7_WbZEKYJWzabnHY4Ahm9nirTL7B1GzCS0yj47RUlRD4hsOn40ukc3CtVK_OU80rYDCWL_tlvUOYdFyK1TbOcFi4QoM5_g_KTWJ_5PaNpjNRk4XURxGmkZnZszUj0IHc" height="380" width="600" alt="2" /><br/>
+		    <p><input id="num2" type="text" name="number2" size="8" maxlength="8">  people</p><br/>
 
-		<img src="https://lh4.googleusercontent.com/aDzsuElSoopOTpdMu6chvJ-ALvtpN4JPyCw-5og8qcIxZJIwEm0yYz1uNalr8BD_C7ZySB1767FxIYTn5bUyXsYQua40OnigDbCaio2Po_qjlPb4xre0qSbXlZ9_E7xy" height="380" width="600" /><br/>
-		<p><input type="text" name="number4" size="8" maxlength="8">people</p><br/>
+		    <p><strong>IMG 3</strong></p>
+		    <img id="img3" src="https://lh5.googleusercontent.com/MWMl0n6oze9DSHWY0LxIAV2nYwGusrYBxjA05-CqTP3-i1rAdbnUwj0s5wdKbr3F7Tk_VByathw92hChI1SL4HWPxpNbzeYkUjssjfppEkYP1OMQy5_rUwM-Crfex8E0" width="600" alt="6" /><br/>
+		    <p><input id="num3" type="text" name="number3" size="8" maxlength="8">  people</p><br/>
 
-		<img src="https://lh6.googleusercontent.com/VXEiyHheBYJ-xCdIRaFzD8s60GZcCXn-2kmQmsAizsLUoQn5oPdnbhsnCeje7Yx93ltvdwclkbSxFiWLYIBmdBT_SQ-wNWGFlU43ffTPwe2boixEwtbsjJVaNJV10BNY"/><br/>
-		<p><input type="text" name="number5" size="8" maxlength="8">people</p><br/>
+		    <p><strong>IMG 4</strong></p>
+		    <img id="img4" src="https://lh4.googleusercontent.com/aDzsuElSoopOTpdMu6chvJ-ALvtpN4JPyCw-5og8qcIxZJIwEm0yYz1uNalr8BD_C7ZySB1767FxIYTn5bUyXsYQua40OnigDbCaio2Po_qjlPb4xre0qSbXlZ9_E7xy" height="380" width="600" /><br/>
+		    <p><input id="num4" type="text" name="number4" size="8" maxlength="8">  people</p><br/>
 
-		<img src="https://lh3.googleusercontent.com/0RV5BRYVM2PPU6Ot8y53cN6HnDNTDTsH584c9-pOb-PbT_kXjG_znZ3x48E5mCBWMO65R0h1lDsky6tM9M8DtOKLiaXto4QSG9gfJB0_TnnhOtkV5-sLIKWD7mk9rfXH"/><br/>
-		<p><input type="text" name="number6" size="8" maxlength="8">people</p><br/>
+		    <p><strong>IMG 5</strong></p>
+		    <img id="img5" src="https://lh6.googleusercontent.com/VXEiyHheBYJ-xCdIRaFzD8s60GZcCXn-2kmQmsAizsLUoQn5oPdnbhsnCeje7Yx93ltvdwclkbSxFiWLYIBmdBT_SQ-wNWGFlU43ffTPwe2boixEwtbsjJVaNJV10BNY"/><br/>
+		    <p><input id="num5" type="text" name="number5" size="8" maxlength="8">  people</p><br/>
 
-        <img src="https://img.purch.com/h/1000/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA1NC82NTAvb3JpZ2luYWwvbWlsbGVubmlhbHMuanBn" height="400" width="600" /><br/>
-        <p><input type="text" name="number7" size="8" maxlength="8">people</p><br/>
+		    <p><strong>IMG 6</strong></p>
+		    <p>For the following picture, since there are too many people, we develop a tool for you to do the work more correctly. </br></br>
+		    First click on one person's face you recognized, and the person will be marked by a red dot.</br>
+		Try to click! And magic will happen!</p>
+
+		    <img id="img6" src="https://lh3.googleusercontent.com/0RV5BRYVM2PPU6Ot8y53cN6HnDNTDTsH584c9-pOb-PbT_kXjG_znZ3x48E5mCBWMO65R0h1lDsky6tM9M8DtOKLiaXto4QSG9gfJB0_TnnhOtkV5-sLIKWD7mk9rfXH"/><br/>
+		    <h3>Here you can see that how many people you've selected so far:</h3>
+   <h3><strong>You've selected <span id="numberofpeople">0</span> people.</strong></h3>
+   <p>So you get the right answer!</p></br>
+
+
+            <p><strong>IMG 7</strong></p>
+            <img id="img7" src="https://img.purch.com/h/1000/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA1NC82NTAvb3JpZ2luYWwvbWlsbGVubmlhbHMuanBn" height="400" width="600" /><br/>
+            <p><input id="num7" type="text" name="number7" size="8" maxlength="8">  people</p><br/>
 	    </center>
 
-		<p align="center">
-			<a href="./end.html"><input type="submit" name="Submit"></a>
-			<input type="reset" name="Reset">
-		</p>
+
+
+    <form id="mturk_form">
+<p>
+  <input id="num1" type="hidden" name="numclicks">
+  <input id="num2" type="hidden" name="keydowns">
+  <input id="num3" type="hidden" name="numberofpeople">
+  <input id="num4" type="hidden" name="history">
+  <input id="num5" type="hidden" name="numclicks">
+  <input id="numberofpeople" type="hidden" name="numclicks">
+  <input id="num7" type="hidden" name="numclicks">
+  <p align="center">
+      
+      <input type="submit" name="Submit">
+
+</p>
 
 <!--</form>-->
 </body>
 </html>
-
