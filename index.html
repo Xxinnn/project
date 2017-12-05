@@ -1,148 +1,627 @@
-<!DOCTYPE html>
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html>
 <head>
-	<title>HIT</title>
-
-<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="mturk.js"></script>
-    <script>
-    	var numclicks = 0;
-    	var keydowns = 0;
-
-      var addedelements = [];
-
-    	$(document).ready(function() {
-    		$("#img6").click(function(e) {
-          numclicks++;
-          $("#numberofpeople").text(numclicks);
-          $("#numberofpeoplefield").val(numclicks);
-
-          var newdomelement = $("<div class='marker'></div>");
-          newdomelement.css("left", (e.pageX-3) + "px");
-          newdomelement.css("top", (e.pageY-3) + "px");
-
-          var currhistory = $("#history").val();
-          currhistory += "|" + e.pageX + "," + e.pageY + "|";
-          $("#history").val(currhistory);
-
-          newdomelement.click(removeElementEvent);
-
-          $("body").append(newdomelement);
-
-          // add to history
-          addedelements.push(newdomelement);
-    		})
-    		$(document).keydown(function(e) {
-    			keydowns++;
-    			$("#numkeydowns").val(keydowns);
-
-          console.log(e);
-
-          if(e.key=="z" && e.ctrlKey) {
-            var elem2remove = addedelements.pop();
-            removeElement(elem2remove);
-          }
-    		})
-    	})
-
-      function removeElement(elem) {
-        $(elem).remove();
-
-        numclicks--;
-        $("#numberofpeople").text(numclicks);
-        $("#numberofpeoplefield").val(numclicks);       
-      }
-
-      function removeElementEvent(e) {
-        removeElement(this);
-      }
-    </script>
-  <style>
-    .marker {
-      border: 2px solid red;
-      border-radius: 5px;
-      width: 2px;
-      height: 2px;
-      position: absolute;
-      left: 0px;
-      top: 0px;
-    }
-  </style>
-</head>
-
-<body>
-	<form id="mturk_form">
-    
-		<h1 align="center">Welcome to Mechanical Turk</h1>
-		<h2 align="center">Task Instruction</h2>
-		<h3 align="center"><strong>Question: How many recognizable people are there in each image?</strong></h3><br />
-		<p align="center" width="800">Type in the text box to tell us how many <strong>people's heads(at least half of the head; back and front both count)</strong> you can recognize in those pictues. The more answers you get it correct, the more payment you will get.</p><br/>
-		
-		<!-- <form name="data" action="mailto:chenxinw@andrew.cmu.edu" method="post" enctype="text/plain">-->
-		
-		<center>
-			<h3>Here's an example: </h3>
-            <img id="img0" src="http://dreamatico.com/data_images/people/people-2.jpg" height="380" width="600" /></br>
-            <p>There are <strong>6 people</strong> in this picture.</p></br>
-
-            <h3>Understand? Let's have a try!</h3>
-			<p><strong>IMG 1</strong></p>
-			<img id="img1" src="https://lh5.googleusercontent.com/UHQoCsSgyHiT_L3CtbRH299KTEAgOQsF5C64rA3jph7pdq3GdXMcvkcqGv361aEIeFI6Nr7MBuVQD6cF6-fAsLIskE0A5A6iQiz4S3RMJRuTHu-g52q9UVSylgu9MC6U" height="350" width="600" alt="12 people" /><br/>
-		    
-		    <p><input id="num1" type="text" name="number1" size="8" maxlength="8">  people</p><br/>
-
-            <p><strong>IMG 2</strong></p>
-		    <img id="img2" src="https://lh6.googleusercontent.com/7_WbZEKYJWzabnHY4Ahm9nirTL7B1GzCS0yj47RUlRD4hsOn40ukc3CtVK_OU80rYDCWL_tlvUOYdFyK1TbOcFi4QoM5_g_KTWJ_5PaNpjNRk4XURxGmkZnZszUj0IHc" height="380" width="600" alt="2" /><br/>
-		    
-        <p><input id="num2" type="text" name="number2" size="8" maxlength="8">  people</p><br/>
-        
-
-		    <p><strong>IMG 3</strong></p>
-		    <img id="img3" src="https://lh5.googleusercontent.com/MWMl0n6oze9DSHWY0LxIAV2nYwGusrYBxjA05-CqTP3-i1rAdbnUwj0s5wdKbr3F7Tk_VByathw92hChI1SL4HWPxpNbzeYkUjssjfppEkYP1OMQy5_rUwM-Crfex8E0" width="600" alt="6" /><br/>
-        
-		    <p><input id="num3" type="text" name="number3" size="8" maxlength="8">  people</p><br/>
-        
-
-		    <p><strong>IMG 4</strong></p>
-		    <img id="img4" src="https://lh4.googleusercontent.com/aDzsuElSoopOTpdMu6chvJ-ALvtpN4JPyCw-5og8qcIxZJIwEm0yYz1uNalr8BD_C7ZySB1767FxIYTn5bUyXsYQua40OnigDbCaio2Po_qjlPb4xre0qSbXlZ9_E7xy" height="380" width="600" /><br/>
-        
-		    <p><input id="num4" type="text" name="number4" size="8" maxlength="8">  people</p><br/>
-        
-
-		    <p><strong>IMG 5</strong></p>
-		    <img id="img5" src="https://lh6.googleusercontent.com/VXEiyHheBYJ-xCdIRaFzD8s60GZcCXn-2kmQmsAizsLUoQn5oPdnbhsnCeje7Yx93ltvdwclkbSxFiWLYIBmdBT_SQ-wNWGFlU43ffTPwe2boixEwtbsjJVaNJV10BNY"/><br/>
-		    
-        <p><input id="num5" type="text" name="number5" size="8" maxlength="8">  people</p><br/>
-        
-
-		    <p><strong>IMG 6</strong></p>
-		    <p>For the following picture, since there are too many people, we develop a tool for you to do the work more correctly. </br></br>
-		    First click on one person's face you recognized, and the person will be marked by a red dot.</br>
-		Try to click! And magic will happen!</p>
-
-		    <img id="img6" src="https://lh3.googleusercontent.com/0RV5BRYVM2PPU6Ot8y53cN6HnDNTDTsH584c9-pOb-PbT_kXjG_znZ3x48E5mCBWMO65R0h1lDsky6tM9M8DtOKLiaXto4QSG9gfJB0_TnnhOtkV5-sLIKWD7mk9rfXH"/><br/>
-		    <h3>Here you can see that how many people you've selected so far:</h3>
-   <h3><strong>You've selected <span id="numberofpeople">0</span> people.</strong></h3>
-   <input id="numberofpeople" type="hidden" name="number6">
-   <p>So you get the right answer!</p>
-   <p>Type the number you selected: <input id="num6" type="text" name="number6" size="8" maxlength="8"> people.</p></br>
-
-
-            <p><strong>IMG 7</strong></p>
-            <img id="img7" src="https://img.purch.com/h/1000/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA1NC82NTAvb3JpZ2luYWwvbWlsbGVubmlhbHMuanBn" height="400" width="600" /><br/>
-            
-            <p><input id="num7" type="text" name="number7" size="8" maxlength="8">  people</p><br/>
-            
-	    </center>
-  
- 
-  <p align="center">
-      
-      <input type="submit" name="Submit">
-
+<title>Avoid Block</title>
+<h2><center>Avoid Block for Multiple Players</h2>
+<p>
+<strong>Instructions: </strong>You're playing this game with multiple users with different IP. Try to control the spaceship collaboratively to avoid the following blocks!
 </p>
-</form>
 
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+var initial_id = 0;
+var loop_id = 0;
+var is_active = false;
+var begin = new Date();
+var p1;
+var p2;
+var p3;
+var p4;
+var p5;
+var p6;                              // position of piece
+var P1;
+var P2;
+var P3;
+var P4;
+var P5;
+var P6;                              // position of mean
+var SUM1;
+var SUM2;
+var SUM3;
+var SUM4;
+var SUM5;
+var SUM6;
+
+var piecex = 0;
+var piecey = 250;
+var piece1y = -50;
+var piece2y = -100;
+var piece3y = -150;
+var piece4y = -200;
+var piece5y = -250;
+var piece6y = -300;
+var playnum = 0;
+var money;
+
+  function isoutofbound(){
+    if(piece1y < 0){
+      $(".piece1").hide();
+    }
+    else{
+      $(".piece1").show();     
+    }
+    if(piece2y < 0){
+      $(".piece2").hide();
+    }
+    else{
+      $(".piece2").show();     
+    }
+    if(piece3y < 0){
+      $(".piece3").hide();
+    }
+    else{
+      $(".piece3").show();     
+    }   
+    if(piece4y < 0){
+      $(".piece4").hide();
+    }
+    else{
+      $(".piece4").show();     
+    }
+    if(piece5y < 0){
+      $(".piece5").hide();
+    }
+    else{
+      $(".piece5").show();     
+    }
+    if(piece6y < 0){
+      $(".piece6").hide();
+    }     
+    else{
+      $(".piece6").show();     
+    }     
+  }
+
+
+  function updateboard0(){
+    var tmpOBJ = {};
+      tmpOBJ["pos1"] = 0;
+      tmpOBJ["pos2"] = 0;
+      tmpOBJ["pos3"] = 0;
+      tmpOBJ["pos4"] = 0;
+      tmpOBJ["pos5"] = 0;
+      tmpOBJ["pos6"] = 0;
+      tmpOBJ["is_active"] = false;
+      $.ajax({
+          url:"https://codingthecrowd.com/counter.php",
+          dataType: "jsonp", 
+          data: {key: "Xxinnn", data: JSON.stringify(tmpOBJ)},
+      })
+     .done(function(data) {
+         console.log(data);
+         var allinputs = data["results"];
+         var num = data["count"]; 
+         SUM1 = 0;
+         SUM2 = 0;
+         SUM3 = 0;
+         SUM4 = 0;
+         SUM5 = 0;
+         SUM6 = 0;
+         playnum = 0;
+         for(var i=0; i<num ; i++){
+            if(JSON.parse(allinputs[i]["data"]).is_active == true){
+               SUM1 += JSON.parse(allinputs[i]["data"]).pos1;
+               SUM2 += JSON.parse(allinputs[i]["data"]).pos2;
+               SUM3 += JSON.parse(allinputs[i]["data"]).pos3;
+               SUM4 += JSON.parse(allinputs[i]["data"]).pos4;
+               SUM5 += JSON.parse(allinputs[i]["data"]).pos5;
+               SUM6 += JSON.parse(allinputs[i]["data"]).pos6;
+               playnum++;           
+            }     
+            console.log("PLAYnum: "+playnum);                                
+         }
+      })     
+     .fail(function(jqxhr, textStatus, error) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+      })
+  }
+
+
+  function updateboard(){
+    var tmpOBJ = {};
+      tmpOBJ["pos1"] = p1;
+      tmpOBJ["pos2"] = p2;
+      tmpOBJ["pos3"] = p3;
+      tmpOBJ["pos4"] = p4;
+      tmpOBJ["pos5"] = p5;
+      tmpOBJ["pos6"] = p6;
+      tmpOBJ["is_active"] = is_active;
+      $.ajax({
+          url:"https://codingthecrowd.com/counter.php",
+          dataType: "jsonp", 
+          data: {key: "Xxinnn", data: JSON.stringify(tmpOBJ)},
+      })
+     .done(function(data) {
+//         console.log(data);
+         var allinputs = data["results"];
+         var num = data["count"]; 
+         SUM1 = 0;
+         SUM2 = 0;
+         SUM3 = 0;
+         SUM4 = 0;
+         SUM5 = 0;
+         SUM6 = 0;
+         playnum = 0;
+         for(var i=0; i<num ; i++){
+            if(JSON.parse(allinputs[i]["data"]).is_active == true){
+               SUM1 += JSON.parse(allinputs[i]["data"]).pos1;
+               SUM2 += JSON.parse(allinputs[i]["data"]).pos2;
+               SUM3 += JSON.parse(allinputs[i]["data"]).pos3;
+               SUM4 += JSON.parse(allinputs[i]["data"]).pos4;
+               SUM5 += JSON.parse(allinputs[i]["data"]).pos5;
+               SUM6 += JSON.parse(allinputs[i]["data"]).pos6;
+               playnum++;           
+            }                                    
+         }
+         if(playnum > 0){
+           P1 = Math.round(Math.round(SUM1/playnum) / 50) * 50;
+           P2 = Math.round(Math.round(SUM2/playnum) / 50) * 50;        
+           P3 = Math.round(Math.round(SUM3/playnum) / 50) * 50;
+           P4 = Math.round(Math.round(SUM4/playnum) / 50) * 50;
+         P5 = Math.round(Math.round(SUM5/playnum) / 50) * 50;   
+           P6 = Math.round(Math.round(SUM6/playnum) / 50) * 50;
+         }
+
+      })     
+     .fail(function(jqxhr, textStatus, error) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+      })
+  }
+
+  function notcollision(){
+    if(piece1y==250){
+      if((P1==0) || (P1==100)){
+        return false;
+      }
+    }
+    if(piece2y==250){
+      if((P2==0) || (P2==150) || (P2==250)){
+        return false;
+      }     
+    }
+    if(piece3y==250){
+      if(P3==50){
+        return false;
+      }     
+    }
+    if(piece4y==250){
+      if((P4==0) || (P4==50) || (P4==200)){
+        return false;
+      }     
+    }
+    if(piece5y==250){
+      if(P5==200){
+        return false;
+      }     
+    }
+    if(piece6y==250){
+      if((P6==0) || (P6==100) || (P6==200)){
+        return false;
+      }       
+    }
+    return true;
+  }
+
+$(document).ready(function(){
+  var gameboard = $("<div id='gameboard'></div>");
+  $(document.body).append(gameboard);
+  var piece = $("<div class='piece'></div>");
+  var Piece = $("<div class='Piece'></div>");  
+  $(gameboard).append(piece);
+  $(gameboard).append(Piece);
+  piece.css('background-image', 'url(' + 'rocket1.png' + ')');
+  Piece.css('background-image', 'url(' + 'rocket1.png' + ')');
+  var piece11 = $("<div class='piece1'></div>");
+  var piece14 = $("<div class='piece1'></div>");
+  var piece21 = $("<div class='piece2'></div>");
+  var piece23 = $("<div class='piece2'></div>");
+  var piece26 = $("<div class='piece2'></div>");
+  var piece36 = $("<div class='piece3'></div>");
+  var piece42 = $("<div class='piece4'></div>");
+  var piece45 = $("<div class='piece4'></div>");
+  var piece55 = $("<div class='piece5'></div>");
+  var piece53 = $("<div class='piece5'></div>");
+  var piece62 = $("<div class='piece6'></div>");
+  var piece66 = $("<div class='piece6'></div>");
+  $(gameboard).append(piece11);
+  $(gameboard).append(piece14);
+  $(gameboard).append(piece21);
+  $(gameboard).append(piece23);  
+  $(gameboard).append(piece26);  
+  $(gameboard).append(piece36);
+  $(gameboard).append(piece42);
+  $(gameboard).append(piece45);
+  $(gameboard).append(piece55);
+  $(gameboard).append(piece53);
+  $(gameboard).append(piece62);
+  $(gameboard).append(piece66); 
+  piece11.css("left", 0 + "px");
+  piece14.css("left", 150 + "px");
+  piece21.css("left", 0 + "px");
+  piece23.css("left", 100 + "px");
+  piece26.css("left", 250 + "px");
+  piece36.css("left", 250 + "px");
+  piece42.css("left", 50 + "px");
+  piece45.css("left", 200 + "px");
+  piece55.css("left", 200 + "px");
+  piece53.css("left", 100 + "px");
+  piece62.css("left", 50 + "px");
+  piece66.css("left", 250 + "px");
+
+    $(document).keydown(function(e) {
+      if(e.keyCode==37) {
+        // left arrow clicked
+        piecex -= 50;
+      } else if(e.keyCode == 39) {
+        // right arrow clicked
+        piecex += 50;
+      }
+      if(piecex > 250){
+        piecex = 0;
+      }
+      if(piecex < 0){
+        piecex = 250;
+      }
+      piece.css("left", piecex + "px");
+    });   
+
+  var si = setInterval(function() {
+    var end = new Date();
+    isoutofbound();
+      if(loop_id >= 10){
+        is_active = true;
+      }
+      if(loop_id >= 6){
+        updateboard0();
+              console.log("playnum: " + playnum);
+      }
+      // console.log("playnum: " + playnum);
+
+      if(loop_id<=5){
+        P1 = piecex;
+        P2 = piecex;
+        P3 = piecex;
+        P4 = piecex;
+        P5 = piecex;
+        P6 = piecex;
+      Piece.css("left",piecex + "px");
+    }
+    else {
+      if(playnum==0){
+          if(piece1y==250){
+            P1 = piecex;
+            Piece.css("left", P1 + "px");
+          }
+          if(piece2y==250){
+            P2 = piecex;
+            Piece.css("left", P2 + "px");
+          }
+          if(piece3y==250){
+            P3 = piecex;
+            Piece.css("left", P3 + "px");
+          }
+          if(piece4y==250){
+            P4 = piecex;
+            Piece.css("left", P4 + "px");
+          }
+          if(piece5y==250){
+            P5 = piecex;
+            Piece.css("left", P5 + "px");
+          }
+          if(piece6y==250){
+            P6 = piecex;
+            Piece.css("left", P6 + "px");
+          }       
+      }
+      else{
+          if(piece1y==250){
+            P1 = Math.round(Math.round((SUM1 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P1 + "px");         
+          }
+          if(piece2y==250){
+            P2 = Math.round(Math.round((SUM2 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P2 + "px");         
+          }
+          if(piece3y==250){
+            P3 = Math.round(Math.round((SUM3 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P3 + "px");         
+          }
+          if(piece4y==250){
+            P4 = Math.round(Math.round((SUM4 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P4 + "px");         
+          }
+          if(piece5y==250){
+            P5 = Math.round(Math.round((SUM5 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P5 + "px");         
+          }
+          if(piece6y==250){
+            P6 = Math.round(Math.round((SUM6 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P6 + "px");         
+          }       
+      }   
+    } 
+
+    if(notcollision() == false){
+        updateboard0();
+        is_active = false;
+        clearInterval(si);
+        alert("Game Over!");
+      }
+    if(piece1y==250){
+        p1 = piecex;
+      }
+      if(piece2y==250){
+        p2 = piecex;
+      }     
+      if(piece3y==250){
+        p3 = piecex;
+      }
+      if(piece4y==250){
+        p4 = piecex;
+      }
+      if(piece5y==250){
+        p5 = piecex;
+      }
+      if(piece6y==250){
+        p6 = piecex;
+      }
+      if(loop_id >= 11){
+        updateboard();
+      }     
+
+    piece1y += 50;
+    piece2y += 50;
+    piece3y += 50;
+    piece4y += 50;
+    piece5y += 50;
+    piece6y += 50;
+    if(piece1y > 251){
+        piece1y = 0;
+      }
+    if(piece2y > 251){
+        piece2y = 0;
+      }
+    if(piece2y > 251){
+        piece2y = 0;
+      }
+    if(piece3y > 251){
+        piece3y = 0;
+      }
+    if(piece4y > 251){
+        piece4y = 0;
+      }
+    if(piece5y > 251){
+        piece5y = 0;
+      }
+    if(piece6y > 251){
+        piece6y = 0;
+      }
+    $(".piece1").css("top", piece1y + "px");
+      $(".piece2").css("top", piece2y + "px");
+      $(".piece3").css("top", piece3y + "px");
+      $(".piece4").css("top", piece4y + "px");
+      $(".piece5").css("top", piece5y + "px");
+      $(".piece6").css("top", piece6y + "px");
+      if(loop_id > 10){
+        is_active = true;
+      }
+      if(loop_id >= 5){
+        updateboard0();
+              console.log("playnum: " + playnum);
+      }
+      // console.log("playnum: " + playnum);
+      if(loop_id<=4){
+        P1 = piecex;
+        P2 = piecex;
+        P3 = piecex;
+        P4 = piecex;
+        P5 = piecex;
+        P6 = piecex;
+      Piece.css("left",piecex + "px");
+    }
+    else {
+      if(playnum==0){
+          if(piece1y==250){
+            P1 = piecex;
+            Piece.css("left", P1 + "px");
+          }
+          if(piece2y==250){
+            P2 = piecex;
+            Piece.css("left", P2 + "px");
+          }
+          if(piece3y==250){
+            P3 = piecex;
+            Piece.css("left", P3 + "px");
+          }
+          if(piece4y==250){
+            P4 = piecex;
+            Piece.css("left", P4 + "px");
+          }
+          if(piece5y==250){
+            P5 = piecex;
+            Piece.css("left", P5 + "px");
+          }
+          if(piece6y==250){
+            P6 = piecex;
+            Piece.css("left", P6 + "px");
+          }       
+      }
+      else{
+          if(piece1y==250){
+            P1 = Math.round(Math.round((SUM1 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P1 + "px");         
+          }
+          if(piece2y==250){
+            P2 = Math.round(Math.round((SUM2 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P2 + "px");         
+          }
+          if(piece3y==250){
+            P3 = Math.round(Math.round((SUM3 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P3 + "px");         
+          }
+          if(piece4y==250){
+            P4 = Math.round(Math.round((SUM4 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P4 + "px");         
+          }
+          if(piece5y==250){
+            P5 = Math.round(Math.round((SUM5 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P5 + "px");         
+          }
+          if(piece6y==250){
+            P6 = Math.round(Math.round((SUM6 + piecex) / (playnum + 1)) / 50) * 50;
+            Piece.css("left", P6 + "px");         
+          }       
+      }   
+    }
+
+    if(piece1y==250){
+        p1 = piecex;
+      }
+      if(piece2y==250){
+        p2 = piecex;
+      }     
+      if(piece3y==250){
+        p3 = piecex;
+      }
+      if(piece4y==250){
+        p4 = piecex;
+      }
+      if(piece5y==250){
+        p5 = piecex;
+      }
+      if(piece6y==250){
+        p6 = piecex;
+      }
+      if(notcollision() == false){
+        updateboard0();
+        is_active = false;
+        clearInterval(si);
+        alert("Game Over!");
+      }
+      if(loop_id >= 10){
+        updateboard();
+      }
+            console.log("playnum: " + playnum);
+    isoutofbound();
+    loop_id++;
+      time1 = (3600*end.getHours())+(60*end.getMinutes())+end.getSeconds() - begin.getSeconds()-(begin.getMinutes()*60)-(3600*begin.getHours());    
+      money = 0.01*time1 ;
+      document.all.show.innerHTML = "Time Duration: "+time1+"s";
+      document.all.show.innerHTML = "Money: $" + money;
+  }, 1000); 
+
+})
+</script>
+<style>
+#gameboard {
+  background-color: transparent;
+  background-image: url("space.jpg");
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+.piece {
+  background-color: transparent;
+  background-image: url("rocket1.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 250px;
+}
+.Piece {
+  background-color: transparent;
+  background-image: url("rocket1.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 250px;
+}
+.piece1 {
+  background-color: transparent;
+  background-image: url("spaceship.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.piece2 {
+  background-color: transparent;
+  background-image: url("spaceship.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.piece3 {
+  background-color: transparent;
+  background-image: url("spaceship.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.piece4 {
+  background-color: transparent;
+  background-image: url("spaceship.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.piece5 {
+  background-color: transparent;
+  background-image: url("spaceship.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.piece6 {
+  background-color: transparent;
+  background-image: url("spaceship.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+</style>
+<body>
+<label id="show"> </label>
 </body>
+</head>
 </html>
